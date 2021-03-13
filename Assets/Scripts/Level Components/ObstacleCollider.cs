@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ObstacleCollider : MonoBehaviour
 {
+    public bool isBottom;
     private Collider _collider;
     private void Awake()
     {
@@ -17,6 +18,10 @@ public class ObstacleCollider : MonoBehaviour
             if (other.gameObject.TryGetComponent(out birdBehaviour))
             {
                 birdBehaviour.HitObstacle(_collider);
+                if (isBottom)
+                {
+                    birdBehaviour.HitBottom();
+                }
             }
         }
     }

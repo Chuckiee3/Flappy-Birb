@@ -20,18 +20,15 @@ public class BirdBehaviour : MonoBehaviour
 
     public void HitObstacle(Collider obstacleCollider)
     {
-        Debug.Log("Hit?");
         if(!isAlive) return;
         
         isAlive = false;
         if (isPlayer)
         {
-            Debug.Log("playeR?_?");
             GameFlow.TriggerLevelFailed();
         }
         else
         {
-            Debug.Log("not playeR?_?");
             GameFlow.TriggerBirdDown();
         }
     }
@@ -41,5 +38,9 @@ public class BirdBehaviour : MonoBehaviour
         _birdMovement.Flap();
     }
 
-  
+
+    public void HitBottom()
+    {
+        _birdMovement.StopMovement();
+    }
 }

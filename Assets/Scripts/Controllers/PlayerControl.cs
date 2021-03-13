@@ -9,7 +9,6 @@ public class PlayerControl : MonoBehaviour
         _birdBehaviour = GetComponent<BirdBehaviour>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

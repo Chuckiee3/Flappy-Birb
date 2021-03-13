@@ -39,4 +39,9 @@ public class BirdMovement : MonoBehaviour
         _rigidbody2D.velocity = vel;
         _rigidbody2D.AddForce(GameSettings.BaseFlapForce * forceMultiplier * Vector2.up, ForceMode2D.Impulse );
     }
+
+    public void StopMovement()
+    {
+        _rigidbody2D.bodyType = RigidbodyType2D.Static;
+    }
 }

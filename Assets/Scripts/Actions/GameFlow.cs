@@ -12,6 +12,7 @@ namespace _GAME_.Scripts.Actions
         public static Action cinematicStarted;
         public static Action cinematicFinished;
         public static Action birdDown;
+        public static Action passedObstacle;
 
         public static void TriggerCinematicStarted()
         {
@@ -46,6 +47,11 @@ namespace _GAME_.Scripts.Actions
         public static void TriggerBirdDown()
         {
             birdDown?.Invoke();
+        }
+
+        public static void TriggerPassedObstacle()
+        {
+            passedObstacle?.Invoke();
         }
     }
 }

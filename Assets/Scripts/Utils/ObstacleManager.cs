@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _GAME_.Scripts.Actions;
+using Singleton;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ObstacleManager : MonoBehaviour
+public class ObstacleManager : NonPersistentSingleton<ObstacleManager>
 {
     public int obstaclePoolSize = 15;
     public ObstacleBehaviour ObstaclePrefab;
@@ -13,19 +13,28 @@ public class ObstacleManager : MonoBehaviour
     private Transform rightMostTransform;
     private float _startX;
     private bool shouldMove;
-    
+    public Transform nextHolePos;
+    private int nextObstacleIndex;
     private void OnEnable()
     {
         GameFlow.levelStarted += StartMoving;
         GameFlow.levelFailed += StopMoving;
+        GameFlow.passedObstacle += UpdateNextObstacle;
     }
+
 
     private void OnDisable()
     {
         GameFlow.levelStarted -= StartMoving;
         GameFlow.levelFailed -= StopMoving;
+        GameFlow.passedObstacle -= UpdateNextObstacle;
     }
 
+    private void UpdateNextObstacle()
+    {
+        nextObstacleIndex = (nextObstacleIndex + 1) % _obstacles.Count;
+        nextHolePos.position = _obstacles[nextObstacleIndex].GetCenter();
+    }
     private void StopMoving()
     {
         shouldMove = false;
@@ -55,6 +64,7 @@ public class ObstacleManager : MonoBehaviour
             posX += Random.Range(GameSettings.MinXDistObstacle, GameSettings.MaxXDistObstacle);
         }
 
+        nextHolePos.position = _obstacles[0].GetCenter();
         rightMostTransform = _obstacles[obstaclePoolSize - 1].transform;
     }
 

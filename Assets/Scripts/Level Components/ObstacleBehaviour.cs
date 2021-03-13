@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class ObstacleBehaviour : MonoBehaviour
@@ -7,6 +8,11 @@ public class ObstacleBehaviour : MonoBehaviour
     private Transform top;
     [SerializeField]
     private Transform bottom;
+
+    [SerializeField]
+    private AIHelperTrigger _trigger;
+
+
     [Button]
     public void OpenHoleWithSize(float holeSize)
     {
@@ -39,5 +45,12 @@ public class ObstacleBehaviour : MonoBehaviour
             pos.y = (-holeSize/2) - 5; 
             bottom.localPosition = pos;
         }
+
+        _trigger.passed = false;
+    }
+
+    public Vector3 GetCenter()
+    {
+        return (bottom.position + top.position) /2;
     }
 }

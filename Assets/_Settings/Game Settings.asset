@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 967680fcdfce23246a09b8f92d19de30, type: 3}
+  m_Name: Game Settings
+  m_EditorClassIdentifier: 
+  baseFlapForce: 5
+  maxFlapForce: 8
+  horizontalMovementSpeed: 2
+  minYObstacle: -4.2
+  maxYObstacle: 4.2
+  minXDistObstacle: 4.5
+  maxXDistObstacle: 7
+  minHoleSize: 2
+  maxHoleSize: 3.5
+  aiLookAheadDistance: 4.5
+  minUpDistanceToFlap: 4
+  groundCheckDistance: 3
+  aiRandomFlapChance: 0.5
+  _aiHelper:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
