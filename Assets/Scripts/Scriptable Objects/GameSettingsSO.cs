@@ -10,6 +10,10 @@ public class GameSettingsSO : ScriptableObject
     public float maxFlapForce;
     [FoldoutGroup("Bird Movement")]
      public float horizontalMovementSpeed;
+
+     [FoldoutGroup("Player Movement")] public float playerFlapCooldown;
+     [FoldoutGroup("Volume Settings")] public float minDBToFlap;
+     [FoldoutGroup("Volume Settings")] public float maxDB;
      
      
     [FoldoutGroup("Level Generation")]

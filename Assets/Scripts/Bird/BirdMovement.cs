@@ -12,13 +12,21 @@ public class BirdMovement : MonoBehaviour
     private void OnEnable()
     {
         GameFlow.levelStarted += StartMoving;
+        GameFlow.levelRestarted += ResetVariables;
     }
 
 
     private void OnDisable()
     {
         GameFlow.levelStarted -= StartMoving;
+        GameFlow.levelRestarted -= ResetVariables;
     }
+    private void ResetVariables()
+    {
+        StopMovement();
+        transform.position = Vector3.zero;
+    }
+
     #endregion
     
     private void StartMoving()
@@ -34,6 +42,7 @@ public class BirdMovement : MonoBehaviour
 
     public void Flap(float forceMultiplier = 1)
     {
+        Debug.Log("force: "+ forceMultiplier);
         if(!_birdBehaviour.isAlive) return;
         var vel = _rigidbody2D.velocity;
         vel.y = 0;

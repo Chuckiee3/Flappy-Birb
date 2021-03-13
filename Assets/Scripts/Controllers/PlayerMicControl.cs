@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMicControl : MonoBehaviour
 {
@@ -9,44 +10,63 @@ public class PlayerMicControl : MonoBehaviour
     private AudioMeasureCS _audioMeasure;
 
     private string selectedDevice;
-    private bool started;
+    private float flapCooldown;
+    private bool recentlyFlapped;
     private void Awake()
     {
         _birdBehaviour = GetComponent<BirdBehaviour>();
-        if (Microphone.devices.Length ==  0)
+        
+    }
+
+    protected void Start()
+    {
+        
+        int min = 0;
+        int max = 0;
+        while(Microphone.devices.Length == 0){}
+        Microphone.GetDeviceCaps(Microphone.devices[0], out min, out max);
+        _source.clip = Microphone.Start(Microphone.devices[0], true, 10, AudioSettings.outputSampleRate);
+       
+        while (!(Microphone.GetPosition(null) > 1))
         {
-            Debug.LogError("No mic found!");
+
         }
-        else
-        {
-            selectedDevice = Microphone.devices[0].ToString();
-            _source.clip = Microphone.Start(selectedDevice, true, 10, AudioSettings.outputSampleRate);
-        }
+        _source.loop = true;
+        _source.Play();
     }
 
     void Update()
     {
-        if (Microphone.GetPosition(selectedDevice) <= 0)
+        
+        
+        if (recentlyFlapped)
         {
-            return;
-        }
-        else
-        {
-            if(!started){
-                started = true;
-                _source.Play();
+            flapCooldown -= Time.deltaTime;
+            if (flapCooldown < 0)
+            {
+                recentlyFlapped = false;
             }
         }
-        if (_audioMeasure.GetDB() >= -5f)
+        if (!recentlyFlapped && _audioMeasure.GetDB() >= GameSettings.minDBToFlap)
         {
-            //TODO: Scale with db loudness
-            Debug.Log("DB::"+_audioMeasure.GetDB());
-            _birdBehaviour.Flap();
+            var mapped = _audioMeasure.GetDB().Remap(GameSettings.minDBToFlap, GameSettings.maxDB,
+                GameSettings.BaseFlapForce, GameSettings.MaxFlapForce);
+            Debug.Log("DB: "+ _audioMeasure.GetDB() + "-forcE:" + mapped);
+            recentlyFlapped = true;
+            flapCooldown = GameSettings.PlayerFlapCooldown;
+            
+            
+            _birdBehaviour.Flap(mapped);
             if (!LevelManager.Instance.levelStarted)
             {
                 LevelManager.Instance.LevelStarted();
                 
             }
         }
+    }
+
+    public float GetDB()
+    {
+        return _audioMeasure.GetDB();
     }
 }

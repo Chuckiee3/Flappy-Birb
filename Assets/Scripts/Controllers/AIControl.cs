@@ -42,17 +42,14 @@ public class AIControl : MonoBehaviour
         //First 2 methods return shouldFlap
         if (BetweenObstaclesAndFarFromTop())
         {
-            Debug.Log("In Obstacle");
             _birdBehaviour.Flap(Random.Range(1,1.25f));
         }
         else if(TooCloseToGround())
         {
-            Debug.Log("Too close to ground");
             _birdBehaviour.Flap(Random.Range(1.25f,1.5f));
             
         }else if (HasObstacleAhead())
         {
-            Debug.Log("Has obstacle");
             if (HoleAbove())
             {
                 if (!recentlyFlapped)
@@ -65,7 +62,6 @@ public class AIControl : MonoBehaviour
         }
         else if(!recentlyRolled && ShouldRandomFlap())
         {
-            Debug.Log("Random flap");
             if (!recentlyFlapped)
             {
                 recentlyFlapped = true;

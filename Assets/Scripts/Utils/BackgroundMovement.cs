@@ -5,7 +5,7 @@ public class BackgroundMovement : MonoBehaviour
 {
     [SerializeField] private Transform[] bgs;
     [SerializeField] private Transform[] bottoms;
-
+    
     private float diffX;
     private float diffXBottom;
     private bool shouldMove;
@@ -18,12 +18,30 @@ public class BackgroundMovement : MonoBehaviour
     {
         GameFlow.levelStarted += StartMoving;
         GameFlow.levelFailed += StopMoving;
+        GameFlow.levelRestarted += ResetPositions;
     }
 
     private void OnDisable()
     {
         GameFlow.levelStarted -= StartMoving;
         GameFlow.levelFailed -= StopMoving;
+        GameFlow.levelRestarted -= ResetPositions;
+    }
+
+    private void ResetPositions()
+    {
+        for (int i = 0; i < len; i++)
+        {
+            var pos = bgs[i].transform.position;
+            pos.x =  diffX * i;
+            bgs[i].transform.position = pos;
+        }
+        for (int i = 0; i < lenBot; i++)
+        {
+            var pos = bottoms[i].transform.position;
+            pos.x =  diffXBottom * i;
+            bottoms[i].transform.position = pos;
+        }
     }
 
     private void StopMoving()

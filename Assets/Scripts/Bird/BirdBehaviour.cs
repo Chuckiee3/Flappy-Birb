@@ -8,12 +8,24 @@ public class BirdBehaviour : MonoBehaviour
     public bool isAlive { get; private set; }
     private bool isPlayer;
     private BirdMovement _birdMovement;
-    private Collider _collider;
+
+    private void OnEnable()
+    {
+        GameFlow.levelRestarted += ResetVariables;
+    }
+    private void OnDisable()
+    {
+        GameFlow.levelRestarted -= ResetVariables;
+    }
+
+    private void ResetVariables()
+    {
+        isAlive = true;
+    }
 
     private void Awake()
     {
         _birdMovement = GetComponent<BirdMovement>();
-        _collider = GetComponent<Collider>();
         isPlayer = TryGetComponent<PlayerControl>(out var playerControl);
         isAlive = true;
     }
@@ -35,7 +47,7 @@ public class BirdBehaviour : MonoBehaviour
 
     public void Flap(float forceMultiplier = 1)
     {
-        _birdMovement.Flap();
+        _birdMovement.Flap(forceMultiplier);
     }
 
 

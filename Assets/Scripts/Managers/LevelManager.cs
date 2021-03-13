@@ -11,4 +11,10 @@ public class LevelManager : PersistentSingleton<LevelManager>
         levelStarted = true;
         GameFlow.TriggerLevelStarted();
     }
+
+    public void RestartLevel()
+    {
+        levelStarted = false;
+        GameFlow.TriggerLevelRestarted();
+    }
 }

@@ -15,11 +15,13 @@ public class ObstacleManager : NonPersistentSingleton<ObstacleManager>
     private bool shouldMove;
     public Transform nextHolePos;
     private int nextObstacleIndex;
+    private float posX;
     private void OnEnable()
     {
         GameFlow.levelStarted += StartMoving;
         GameFlow.levelFailed += StopMoving;
         GameFlow.passedObstacle += UpdateNextObstacle;
+        GameFlow.levelRestarted += ResetVariables;
     }
 
 
@@ -28,6 +30,27 @@ public class ObstacleManager : NonPersistentSingleton<ObstacleManager>
         GameFlow.levelStarted -= StartMoving;
         GameFlow.levelFailed -= StopMoving;
         GameFlow.passedObstacle -= UpdateNextObstacle;
+        GameFlow.levelRestarted -= ResetVariables;
+    }
+
+    private void ResetVariables()
+    {
+        if (_backgroundMovement == null)
+        {
+            _startX = 6f;
+        }
+        else
+        {
+            _startX = _backgroundMovement.DiffX;
+        }
+        posX = _startX;
+        for (int i = 0; i < obstaclePoolSize; i++)
+        {
+            Destroy(_obstacles[i].gameObject);
+            
+        }
+        _obstacles.Clear();
+        CreateObstacles();
     }
 
     private void UpdateNextObstacle()
@@ -56,7 +79,12 @@ public class ObstacleManager : NonPersistentSingleton<ObstacleManager>
             _startX = _backgroundMovement.DiffX;
         }
         _obstacles = new List<ObstacleBehaviour>();
-        var posX = _startX;
+        posX = _startX;
+        CreateObstacles();
+    }
+
+    private void CreateObstacles()
+    {
         for (int i = 0; i < obstaclePoolSize; i++)
         {
             _obstacles.Add(Instantiate(ObstaclePrefab, GetRandomSpawnVectorWithX(posX), Quaternion.identity));
