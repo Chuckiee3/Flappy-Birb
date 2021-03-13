@@ -42,7 +42,6 @@ public class BirdMovement : MonoBehaviour
 
     public void Flap(float forceMultiplier = 1)
     {
-        Debug.Log("force: "+ forceMultiplier);
         if(!_birdBehaviour.isAlive) return;
         var vel = _rigidbody2D.velocity;
         vel.y = 0;
