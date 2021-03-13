@@ -6,6 +6,7 @@ public class BirdMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private BirdBehaviour _birdBehaviour;
+    public Vector3 Velocity => _rigidbody2D.velocity;
 
     #region Event Registration
     private void OnEnable()
@@ -42,6 +43,9 @@ public class BirdMovement : MonoBehaviour
 
     public void StopMovement()
     {
-        _rigidbody2D.bodyType = RigidbodyType2D.Static;
+        _rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        _rigidbody2D.velocity =Vector2.zero;
+        
     }
+
 }

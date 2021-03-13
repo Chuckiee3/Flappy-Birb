@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7140354578218415496}
   - component: {fileID: 7140354578218415499}
   - component: {fileID: 4896773656593886966}
+  - component: {fileID: 5994606115026067733}
   m_Layer: 10
   m_Name: AI Bird 1
   m_TagString: Bird
@@ -190,4 +191,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fbf32f82074a94786d220baf6321a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: 1c767e8fa2d80514fae0c30d11eca3b3, type: 2}
+--- !u!114 &5994606115026067733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140354578218415500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1663e82393e84e0499f86343d75bf533, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _birdMovement: {fileID: 7140354578218415496}
+  _birdBehaviour: {fileID: 7140354578218415499}
+  model: {fileID: 7140354577947941958}
